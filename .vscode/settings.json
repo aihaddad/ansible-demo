@@ -1,0 +1,10 @@
+{
+    "editor.formatOnSave": true,
+    "editor.rulers": [
+        80,
+        120
+    ],
+    "files.associations": {
+        "**/*.yml": "ansible-advanced"
+    }
+}
