@@ -1,0 +1,12 @@
+---
+- hosts: mac
+  tasks:
+    - name: > # Trying line folding
+        Ping
+        localhost
+      ping:
+
+- hosts: playgrounds
+  tasks:
+    - name: Ping playground servers
+      ping:
