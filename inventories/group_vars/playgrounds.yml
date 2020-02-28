@@ -1,0 +1,13 @@
+---
+working_dir: ~/Project
+
+service_list:
+  - apache
+  - nfs
+  - mariadb
+
+share_paths:
+  nfs: /mnt/nfs
+  cifs: /mnt/cifs
+  iscsi: /mnt/iscsi
+  work: "{{ working_dir }}"

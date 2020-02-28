@@ -1,0 +1,22 @@
+---
+- hosts: playgrounds
+  tasks:
+    - name: Create working directory
+      file:
+        name: "{{ working_dir }}"
+        state: directory
+
+    - name: Write service list
+      lineinfile:
+        path: "{{ working_dir }}/services.txt"
+        line: "{{ service_list }}"
+        create: yes
+
+    - name: View share property
+      command: ls -la "{{ share_paths['work'] }}"
+      register: cmd_output
+
+    - name: Write command module output to file
+      copy:
+        content: "{{ cmd_output }}"
+        dest: "{{ working_dir }}/cmd_output.txt"

@@ -12,15 +12,13 @@
   tasks:
     - name: Install Apache on CentOS
       package:
-        name: httpd
+        name: "{{ apache_pkg }}"
         state: latest
-        use: yum
 
 - hosts: ubuntu
   become: yes
   tasks:
     - name: Install Apache on Ubuntu
       package:
-        name: apache2
+        name: "{{ apache_pkg }}"
         state: latest
-        use: apt
