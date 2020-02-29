@@ -1,0 +1,13 @@
+---
+- hosts: playgrounds
+  tasks:
+    - name: Write out hostname
+      lineinfile:
+        path: ~/hostname
+        line: "{{ ansible_hostname }}"
+        create: yes
+
+    - name: Write out hostvars # magic variables
+      lineinfile:
+        path: ~/hostname
+        line: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
