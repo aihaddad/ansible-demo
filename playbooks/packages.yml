@@ -7,18 +7,30 @@
         name: elinks
         state: latest
 
-- hosts: centos
-  become: yes
-  tasks:
     - name: Install Apache on CentOS
       package:
-        name: "{{ apache_pkg }}"
+        name: "{{ distribution['centos']['apache_pkg'] }}"
         state: latest
+      when: ansible_distribution == "CentOS" or ansible_distribution == "Red Hat Enterprise Linux"
 
-- hosts: ubuntu
-  become: yes
-  tasks:
     - name: Install Apache on Ubuntu
       package:
-        name: "{{ apache_pkg }}"
+        name: "{{ distribution['ubuntu']['apache_pkg'] }}"
         state: latest
+      when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
+
+# - hosts: centos
+#   become: yes
+#   tasks:
+#     - name: Install Apache on CentOS
+#       package:
+#         name: "{{ apache_pkg }}"
+#         state: latest
+
+# - hosts: ubuntu
+#   become: yes
+#   tasks:
+#     - name: Install Apache on Ubuntu
+#       package:
+#         name: "{{ apache_pkg }}"
+#         state: latest

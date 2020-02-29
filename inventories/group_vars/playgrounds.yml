@@ -11,3 +11,9 @@ share_paths:
   cifs: /mnt/cifs
   iscsi: /mnt/iscsi
   work: "{{ working_dir }}"
+
+distribution:
+  centos:
+    apache_pkg: httpd
+  ubuntu:
+    apache_pkg: apache2
