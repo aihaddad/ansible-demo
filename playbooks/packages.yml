@@ -6,18 +6,24 @@
       package:
         name: elinks
         state: latest
+      tags:
+        - elinks
 
     - name: Install Apache on CentOS
       package:
         name: "{{ distribution['centos']['apache_pkg'] }}"
         state: latest
       when: ansible_distribution == "CentOS" or ansible_distribution == "Red Hat Enterprise Linux"
+      tags:
+        - apache
 
     - name: Install Apache on Ubuntu
       package:
         name: "{{ distribution['ubuntu']['apache_pkg'] }}"
         state: latest
       when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
+      tags:
+        - apache
 
 # - hosts: centos
 #   become: yes
