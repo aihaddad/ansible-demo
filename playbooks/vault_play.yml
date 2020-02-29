@@ -1,0 +1,15 @@
+# use with the "--vault-id prod@prompt"
+---
+- hosts: mac
+  vars_files:
+    ../secret.yml
+  tasks:
+    - name: Decrypt and add text to an open file
+      lineinfile:
+        path: ../sample.txt
+        line: "{{ password }}"
+        create: yes
+      # logs might expose these information to sysadmins with
+      # verbose or debug options enabled
+      no_log: yes
+        
