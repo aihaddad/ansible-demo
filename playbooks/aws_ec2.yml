@@ -10,6 +10,11 @@
 - hosts: mac
   gather_facts: no
   tasks:
+    - name: Change keypair permissions
+      file:
+        path: "{{ ssh_key_file }}"
+        mode: '400'
+
     - name: Provision EC2
       ec2:
         instance_type: t2.micro
@@ -29,16 +34,17 @@
         var: ec2
 
     - name: Add EC2 hosts to inventory
+    # This adds the hosts to the playbook's in-memory inventory
       add_host:
-        hostname: "{{ item.public_dns_name }}" # may also be .public_dns_name
+        hostname: "{{ item.public_ip }}" # may also be .public_dns_name
         groupname: ec2instances
+        ansible_user: ec2-user
         ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
-        ansible_ssh_private_key_file: ~/.keypairs/ansible-ec2.pem
+        ansible_ssh_private_key_file: "{{ ssh_key_file }}"
       loop: "{{ ec2.instances }}"
 
 - hosts: ec2instances
   gather_facts: no
-  remote_user: ec2-user
   tasks:
     - name: Wait for SSH connection
       wait_for_connection:
