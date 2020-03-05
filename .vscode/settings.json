@@ -6,5 +6,7 @@
     ],
     "files.associations": {
         "**/*.yml": "ansible-advanced"
-    }
+    },
+    "python.formatting.provider": "black",
+    "python.pythonPath": "/usr/local/bin/python3"
 }
