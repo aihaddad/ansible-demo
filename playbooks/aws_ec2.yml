@@ -64,3 +64,35 @@
       ping:
       tags:
         - provision
+
+- hosts: mac
+  gather_facts: yes
+  tasks:
+    - name: Get EC2 instances by tag
+      ec2_instance_info:
+        filters:
+          tag:Name: BuiltWithAnsible
+      tags:
+        - terminate
+      register: ec2_facts
+    - debug:
+        var: ec2_facts.instances[0].instance_id
+
+    - name: Remove instance tag
+      ec2_tag:
+        resource: "{{ ec2_facts.instances[0].instance_id }}"
+        tags:
+          Name:
+        state: absent
+      tags:
+        - terminate
+
+    - name: Terminate EC2 instance
+      ec2:
+        instance_id: "{{ ec2_facts.instances[0].instance_id }}"
+        state: absent
+      tags:
+        - terminate
+      register: ec2
+    - debug:
+        var: ec2
