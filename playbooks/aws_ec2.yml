@@ -3,8 +3,8 @@
 # Ensure that ansible_connection is set to local for localhost in the inventory
 # My localhost is aliased to "mac"
 # ENV variables in the file:
-# - AWS_ACCESS_KEY
-# - AWS_SECRET_KEY
+# - AWS_ACCESS_KEY_ID
+# - AWS_SECRET_ACCESS_KEY
 # - AWS_REGION
 ---
 - hosts: mac
@@ -57,11 +57,6 @@
       wait_for_connection:
         delay: 5
         timeout: 90
-      tags:
-        - provision
-
-    - name: Check connection status
-      ping:
       tags:
         - provision
 

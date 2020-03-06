@@ -34,14 +34,14 @@
 
     - name: Collect instance facts
       ec2_metadata_facts:
-      register: ec2_meta
+      register: ec2_meta # unused variable
 
 - hosts: mac
   gather_facts: yes
   tasks:
     - name: Inspect meta facts
       debug:
-        var: hostvars[groups["ec2instances"][0]["ansible_ec2_instance_id"]]
+        var: hostvars[groups["ec2instances"][0]]["ansible_ec2_instance_id"]
 
     - name: Change instances state by tag
       ec2:
@@ -50,3 +50,5 @@
         instance_tags:
             Name: BuiltWithAnsible
       register: ec2
+      tags:
+        - stop
