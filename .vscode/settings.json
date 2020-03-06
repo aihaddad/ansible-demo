@@ -1,11 +1,12 @@
 {
     "editor.formatOnSave": true,
+    "editor.tabSize": 2,
     "editor.rulers": [
         80,
         120
     ],
     "files.associations": {
-        "**/*.yml": "ansible-advanced"
+        "**/*.yml": "ansible"
     },
     "python.formatting.provider": "black",
     "python.pythonPath": "/usr/local/bin/python3"

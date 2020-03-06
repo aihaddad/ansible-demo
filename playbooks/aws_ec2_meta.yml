@@ -1,0 +1,52 @@
+---
+- hosts: mac
+  gather_facts: no
+  tasks:
+    - name: Change instances state by tag
+      ec2:
+        state: running
+        wait: yes
+        instance_tags:
+            Name: BuiltWithAnsible
+      register: ec2
+
+    - name: Get instances IPs
+      debug:
+        msg: "IP address: {{ item.public_ip }}"
+      loop: "{{ ec2.instances }}"
+
+    - name: Add hosts to inventory
+      add_host:
+        hostname: "{{ item.public_ip }}" 
+        groupname: ec2instances
+        ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
+        ansible_ssh_private_key_file: "{{ ssh_key_file }}"
+      loop: "{{ ec2.instances }}"
+
+- hosts: ec2instances
+  gather_facts: no
+  remote_user: ec2-user
+  tasks:
+    - name: Wait for SSH connection
+      wait_for_connection:
+        delay: 5
+        timeout: 30
+
+    - name: Collect instance facts
+      ec2_metadata_facts:
+      register: ec2_meta
+
+- hosts: mac
+  gather_facts: yes
+  tasks:
+    - name: Inspect meta facts
+      debug:
+        var: hostvars[groups["ec2instances"][0]["ansible_ec2_instance_id"]]
+
+    - name: Change instances state by tag
+      ec2:
+        state: stopped
+        wait: yes
+        instance_tags:
+            Name: BuiltWithAnsible
+      register: ec2
