@@ -1,0 +1,17 @@
+---
+- hosts: mac
+  gather_facts: no
+  tasks:
+    - name: Create S3 bucket
+      aws_s3:
+        bucket: 202002-this-must-be-unique
+        mode: create
+      tags:
+        - create
+
+    - name: Upload file to bucket
+      aws_s3:
+        bucket: 202002-this-must-be-unique
+        mode: put
+        object: /sample.txt
+        src: ../sample.txt
