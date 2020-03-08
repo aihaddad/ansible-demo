@@ -1,0 +1,22 @@
+---
+- hosts: mac
+  gather_facts: no
+  vars:
+    vpc_facts_file: ../facts/aws_vpc
+  tasks:
+    - name: Gather VPC facts
+      ec2_vpc_net_info:
+      register: vpc_facts
+    
+    - name: Cleanup old VPC facts
+      file:
+        path: "{{ vpc_facts_file }}"
+        state: absent
+      tags:
+        - remove
+
+    - name: Save VPC facts
+      lineinfile:
+        create: yes
+        path: "{{ vpc_facts_file }}"
+        line: "{{ vpc_facts }}"
