@@ -1,0 +1,34 @@
+---
+- hosts: mac
+  gather_facts: no
+  tasks:
+    - name: Remove keypair
+      ec2_key:
+        name: built-with-ansible
+        state: absent
+      tags:
+        - remove
+
+    - name: Create keypair
+      ec2_key:
+        name: built-with-ansible
+      register: keypair
+      tags:
+        - create
+
+    - name: Clean up local keyfiles
+      file:
+        path: ~/.keypairs/built-with-ansible.pem
+        state: absent
+      tags:
+        - create
+        - remove
+
+    - name: Write keypair to local file
+      lineinfile:
+        create: yes
+        path: ~/.keypairs/built-with-ansible.pem
+        line: "{{ keypair.key.private_key }}"
+        mode: 400
+      tags:
+        - create
