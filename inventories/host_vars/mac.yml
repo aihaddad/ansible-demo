@@ -1,4 +1,4 @@
-ssh_key_file: ~/.keypairs/ansible-ec2.pem
+ssh_key_file: ~/.keypairs/built-with-ansible.pem
 ami_id: ami-0a887e401f7654935 # amzn2-ami-hvm-2.0.20200207.1-x86_64-gp2
-subnet_id: subnet-023c88a234e23db88
+subnet_id: subnet-00507cfacd9b57376
 security_group: ssh-access

@@ -20,7 +20,7 @@
     - name: Provision EC2
       ec2:
         instance_type: t2.micro
-        keypair: ansible-ec2
+        keypair: built-with-ansible
         image: "{{ ami_id }}"
         assign_public_ip: yes
         vpc_subnet_id: "{{ subnet_id }}"

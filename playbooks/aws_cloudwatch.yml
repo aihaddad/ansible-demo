@@ -1,0 +1,22 @@
+---
+- hosts: mac
+  gather_facts: no
+  tasks:
+    - name: Remove Alarm
+      ec2_metric_alarm:
+        name: "cpu-low"
+        state: absent
+
+    - name: Create alarm
+      ec2_metric_alarm:
+          state: present
+          name: "cpu-high"
+          metric: "CPUUtilization"
+          statistic: Average
+          period: 300
+          threshold: 90.0
+          unit: "Percent"
+          dimensions: {"InstanceId": "i-0bbe44d7926dea0ac"}
+          namespace: "AWS/EC2"
+          evaluation_periods: 3
+          comparison: ">="
